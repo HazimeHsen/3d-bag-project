@@ -1,4 +1,3 @@
-"use client";
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import Content from "@/components/Hero/Content";
@@ -24,9 +23,7 @@ function Hero() {
     typeof window !== "undefined"
       ? localStorage.getItem("activeDataIndex")
       : null;
-  const [activeData, setActiveData] = useState(
-    savedIndex !== null ? data[parseInt(savedIndex)] : null
-  );
+  const [activeData, setActiveData] = useState(null); // Initialize activeData as null
 
   useEffect(() => {
     if (savedIndex !== null) {
@@ -36,12 +33,16 @@ function Hero() {
   }, []);
 
   useEffect(() => {
-    const activeIndex = data.findIndex((item) => item.id === activeData.id);
-    localStorage.setItem("activeDataIndex", activeIndex.toString());
+    if (activeData) {
+      const activeIndex = data.findIndex((item) => item.id === activeData.id);
+      localStorage.setItem("activeDataIndex", activeIndex.toString());
+    }
   }, [activeData]);
 
   const handleSwatchClick = (item) => {
-    if (activeData.id !== item.id) setActiveData(item);
+    if (activeData && activeData.id !== item.id) {
+      setActiveData(item);
+    }
   };
 
   useEffect(() => {
@@ -62,6 +63,10 @@ function Hero() {
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (!activeData) {
+    return null; // Handle the case where activeData is still null (optional)
   }
 
   return (
