@@ -29,6 +29,8 @@ function Hero() {
   useEffect(() => {
     if (savedIndex !== null) {
       setActiveData(data[parseInt(savedIndex)]);
+    }else{
+        setActiveData(data[0]);
     }
     setLoading(false);
   }, []);
