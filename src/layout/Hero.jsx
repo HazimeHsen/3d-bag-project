@@ -24,13 +24,13 @@ function Hero() {
     typeof window !== "undefined"
       ? localStorage.getItem("activeDataIndex")
       : null;
-  const [activeData, setActiveData] = useState(null); // Initialize activeData as null
+  const [activeData, setActiveData] = useState(null);
 
   useEffect(() => {
     if (savedIndex !== null) {
       setActiveData(data[parseInt(savedIndex)]);
-      setLoading(false);
     }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function Hero() {
   }
 
   if (!activeData) {
-    return null; // Handle the case where activeData is still null (optional)
+    return null;
   }
 
   return (
